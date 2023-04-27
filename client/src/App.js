@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Hero from "./components/Mobile/Hero";
 import bgColors from "./themes/colorPallette";
-import TotalPrice from "./components/Mobile/TotalPrice";
+import TotalComponent from "./components/Mobile/TotalComponent";
 
 import {
   readCreditsAccountsPayable,
@@ -31,7 +31,9 @@ function App() {
   const [notesReceivable, setNotesReceivable] = useState();
   const [adminExpense, setAdminExpense] = useState();
 
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState();
+
+  const [loading, setLoading] = useState(true);
 
   const handleUploadedFile = async (file) => {
     let tempCredits = [];
@@ -39,49 +41,55 @@ function App() {
 
     tempCredits = await readCreditsCash(file);
     tempDebits = await readDebitsCash(file);
-    setCash({ debits: tempDebits, credits: tempCredits });
+    let tempCash = { debits: tempDebits, credits: tempCredits };
 
     tempCredits = await readCreditsAccountsReceivable(file);
     tempDebits = await readDebitsAccountsReceivable(file);
-    setAccountsReceivable({ debits: tempDebits, credits: tempCredits });
+    let tempAccReceivable = { debits: tempDebits, credits: tempCredits };
 
     tempCredits = await readCreditsNotesReceivable(file);
     tempDebits = await readDebitsNotesReceivable(file);
-    setNotesReceivable({ debits: tempDebits, credits: tempCredits });
+    let tempNotesReceivable = { debits: tempDebits, credits: tempCredits };
 
     tempCredits = await readCreditsAccountsPayable(file);
     tempDebits = await readDebitsAccountsPayable(file);
-    setAccountsPayable({ debits: tempDebits, credits: tempCredits });
+    let tempAccPayable = { debits: tempDebits, credits: tempCredits };
 
     tempCredits = await readCreditsAdminExpense(file);
     tempDebits = await readDebitsAdminExpense(file);
-    setAdminExpense({ debits: tempDebits, credits: tempCredits });
+    let tempAdminExp = { debits: tempDebits, credits: tempCredits };
 
-    setLoading(false);
+    setData({
+      cash: tempCash,
+      accountsReceivable: tempAccReceivable,
+      notesReceivable: tempNotesReceivable,
+      accountsPayable: tempAccPayable,
+      adminExpense: tempAdminExp,
+    });
   };
 
   useEffect(() => {
-    if (cash) console.log(cash);
-  }, [cash]);
-  useEffect(() => {
-    if (accountsReceivable) console.log(accountsReceivable);
-  }, [accountsReceivable]);
-  useEffect(() => {
-    if (notesReceivable) console.log(notesReceivable);
-  }, [notesReceivable]);
-  useEffect(() => {
-    if (accountsPayable) console.log(accountsPayable);
-  }, [accountsPayable]);
-  useEffect(() => {
-    if (adminExpense) console.log(adminExpense);
-  }, [adminExpense]);
+    if (data) setLoading(false);
+  }, [data]);
 
   return (
     <div className={`App ${colorsSelected.gradient} w-screen h-screen`}>
       {loading ? (
         <Hero colors={colorsSelected} handleUploadedFile={handleUploadedFile} />
       ) : (
-        <div className="flex w-screen h-screen justify-center items-center"><TotalPrice/></div>
+        <div className="flex w-screen h-screen justify-center items-center">
+          {data ? (
+            <div className="flex flex-col h-screen w-screen justify-evenly items-center">
+              <TotalComponent name={"Cash"} values={data.cash} />
+              <TotalComponent name={"Accounts Receivable"} values={data.accountsReceivable} />
+              <TotalComponent name={"Notes Receivable"} values={data.notesReceivable} />
+              <TotalComponent name={"Accounts Payable"} values={data.accountsPayable} />
+              <TotalComponent name={"Admin Expense"} values={data.adminExpense} />
+            </div>
+          ) : (
+            <>Hello</>
+          )}
+        </div>
       )}
     </div>
   );
