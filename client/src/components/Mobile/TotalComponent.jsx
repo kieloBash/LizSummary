@@ -24,7 +24,7 @@ const TotalPrice = ({ name, values, toggleBreakdown, colors }) => {
 
   return (
     <div
-      className="p-2 px-4 w-full h-full"
+      className=" px-4 w-full h-full"
       onClick={() => toggleBreakdown(name)}
     >
       <div className="flex h-full w-full">
@@ -64,13 +64,13 @@ const TotalPrice = ({ name, values, toggleBreakdown, colors }) => {
 
         <div className="flex flex-col w-full">
           <div className="flex items-center w-full">
-            <p className="text-lg font-normal text-black text-md min-w-[7rem] text-center w-full">
+            <p className="text-md font-normal text-black text-md min-w-[7rem] text-center w-full">
               {name}
             </p>
           </div>
           <div className="flex justify-evenly items-center">
             <p
-              className={`text-4xl font-bold text-center ${
+              className={`text-2xl font-bold text-center ${
                 total > 0 ? `${colors.text}` : "text-red-400"
               } flex items-center`}
             >

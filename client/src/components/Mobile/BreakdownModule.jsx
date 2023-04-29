@@ -41,7 +41,7 @@ const BreakdownModule = ({ toBreakDown, setToggleModule, colors }) => {
 
           <div className="grid grid-cols-2 gap-4 h-4/5 text-gray-200">
             <div
-              className={`${colors.bg} rounded-3xl p-2 grid grid-cols-2 mx-auto max-h-[27rem] overflow-y-auto shadow-lg`}
+              className={`${colors.bg} rounded-3xl p-2 grid grid-cols-2 mx-auto max-h-[20rem] overflow-y-auto shadow-lg`}
             >
               <table className="table-auto">
                 <thead>
@@ -83,7 +83,7 @@ const BreakdownModule = ({ toBreakDown, setToggleModule, colors }) => {
               </table>
             </div>
             <div
-              className={`${colors.bg} rounded-3xl p-2 grid grid-cols-2 mx-auto max-h-[27rem] overflow-y-auto shadow-lg`}
+              className={`${colors.bg} rounded-3xl p-2 grid grid-cols-2 mx-auto max-h-[20rem] overflow-y-auto shadow-lg`}
             >
               <table className="table-auto">
                 <thead>
@@ -126,7 +126,7 @@ const BreakdownModule = ({ toBreakDown, setToggleModule, colors }) => {
             </div>
           </div>
 
-          <div className={`grid grid-cols-2 gap-2 w-full ${colors.text} mb-6`}>
+          <div className={`grid grid-cols-2 gap-2 w-full ${colors.text} mb-2` }>
             <div className="flex flex-col justify-center items-center">
               <h1>Total Debit</h1>
               <h1>{debit}</h1>

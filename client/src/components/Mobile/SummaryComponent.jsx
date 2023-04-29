@@ -84,21 +84,21 @@ const SummaryComponent = ({ data, colors }) => {
           className={`w-5/6 h-4/5 flex justify-center items-center font-main ${colors.text} font-normal mb-32`}
         >
           <div className="grid grid-cols-1 grid-rows-3 gap-5">
-            <div className="bg-white/80 w-[18rem] h-[14rem] rounded-2xl shadow-xl p-4 flex flex-col">
-              <div className="text-2xl mb-2 font-bold ml-1">Assets</div>
+            <div className="bg-white/80 w-[18rem] h-[11rem] rounded-2xl shadow-xl p-2 flex flex-col">
+              <div className="text-xl mb-0 font-bold ml-1">Assets</div>
               <div className="bg-white w-full h-full rounded-2xl shadow-xl p-2 text-gray-400 flex justify-evenly flex-col">
                 {assetValues.map((asset, index) => {
                   return (
                     <div key={index}>
                       {asset.name === "Total" ? (
                         <div
-                          className={`${colors.text} text-md flex max-w-full mt-2 font-bold`}
+                          className={`${colors.text} text-sm flex max-w-full mt-2 font-bold`}
                         >
                           <div className="w-[9.4rem]">{asset.name}</div>
                           {asset.val}
                         </div>
                       ) : (
-                        <div className="text-md flex max-w-full">
+                        <div className="text-sm flex max-w-full">
                           <div className="w-[9.4rem]">{asset.name}</div>
                           {asset.val}
                         </div>
@@ -108,21 +108,21 @@ const SummaryComponent = ({ data, colors }) => {
                 })}
               </div>
             </div>
-            <div className="bg-white/80 w-[18rem] h-[14rem] rounded-2xl shadow-xl p-4 flex flex-col">
-              <div className="text-2xl mb-2 font-bold ml-1">Liabilities</div>
+            <div className="bg-white/80 w-[18rem] h-[11rem] rounded-2xl shadow-xl p-2 flex flex-col">
+              <div className="text-xl mb-0 font-bold ml-1">Liabilities</div>
               <div className="bg-white w-full h-full rounded-2xl shadow-xl p-2 text-gray-400 flex justify-start flex-col">
                 {liabilitiesValues.map((asset, index) => {
                   return (
                     <div key={index}>
                       {asset.name === "Total" ? (
                         <div
-                          className={`${colors.text} text-md flex max-w-full mt-2 font-bold`}
+                          className={`${colors.text} text-sm flex max-w-full mt-2 font-bold`}
                         >
                           <div className="w-[9.4rem]">{asset.name}</div>
                           {asset.val}
                         </div>
                       ) : (
-                        <div className="text-md flex max-w-full">
+                        <div className="text-sm flex max-w-full">
                           <div className="w-[9.4rem]">{asset.name}</div>
                           {asset.val}
                         </div>
@@ -132,21 +132,21 @@ const SummaryComponent = ({ data, colors }) => {
                 })}
               </div>
             </div>
-            <div className="bg-white/80 w-[18rem] h-[14rem] rounded-2xl shadow-xl p-4 flex flex-col">
-              <div className="text-2xl mb-2 font-bold ml-1">Owner's Equity</div>
-              <div className="bg-white w-full h-full rounded-2xl shadow-xl p-2 text-gray-400 flex justify-evenly flex-col">
+            <div className="bg-white/80 w-[18rem] h-[11rem] rounded-2xl shadow-xl p-2 flex flex-col">
+              <div className="text-xl mb-0 font-bold ml-1">Owner's Equity</div>
+              <div className="bg-white w-full h-full rounded-2xl shadow-xl p-2 text-gray-400 flex justify-start flex-col">
                 {equityValues.map((asset, index) => {
                   return (
                     <div key={index}>
                       {asset.name === "Liabilities & Owners Equity" ? (
                         <div
-                          className={`${colors.text} text-md flex max-w-full mt-2 font-bold`}
+                          className={`${colors.text} text-sm flex max-w-full mt-2 font-bold`}
                         >
                           <div className="w-[9.4rem]">{asset.name}</div>
                           {asset.val}
                         </div>
                       ) : (
-                        <div className="text-md flex max-w-full">
+                        <div className="text-sm flex max-w-full">
                           <div className="w-[9.4rem]">{asset.name}</div>
                           {asset.val}
                         </div>
@@ -156,6 +156,7 @@ const SummaryComponent = ({ data, colors }) => {
                 })}
               </div>
             </div>
+            
           </div>
         </div>
       ) : (
