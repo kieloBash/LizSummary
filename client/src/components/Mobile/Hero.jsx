@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import FileUploadModal from './FileUploadModal'
 function Hero({ colors, handleUploadedFile }) {
-  const [show, setShow] = useState(false);
   return (
     <div
       className={`bg-transparent pb-12 overflow-y-hidden`}

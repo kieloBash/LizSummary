@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Hero from "./components/Mobile/Hero";
 import bgColors from "./themes/colorPallette";
-import TotalComponent from "./components/Mobile/TotalComponent";
 import SummaryComponent from "./components/Mobile/SummaryComponent";
 import {
   readCashModule,

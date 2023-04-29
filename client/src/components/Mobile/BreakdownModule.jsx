@@ -4,7 +4,6 @@ const BreakdownModule = ({ toBreakDown, setToggleModule, colors }) => {
   const [debit, setDebit] = useState(0);
   const [credit, setCredit] = useState(0);
   const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     let debit = 0;
     let credit = 0;
@@ -23,7 +22,7 @@ const BreakdownModule = ({ toBreakDown, setToggleModule, colors }) => {
     } else {
       setTotal((debit - credit).toFixed(2));
     }
-  }, []);
+  }, [toBreakDown]);
 
   return (
     <>
