@@ -14,6 +14,7 @@ import {
 import BreakdownModule from "./components/Mobile/BreakdownModule";
 import Navbar from "./components/Mobile/Navbar";
 import CashComponent from "./components/Mobile/CashComponent";
+import OwnerComponent from "./components/Mobile/OwnerComponent";
 
 function App() {
   const [colorsSelected, setColorsSelected] = useState({
@@ -126,73 +127,6 @@ function App() {
         <div className="flex w-screen h-screen justify-center items-center overflow-hidden relative">
           {allData ? (
             <div className="h-full w-full">
-              {/* <div className="flex justify-center items-center w-full">
-                <div className="ml-[3px] grid grid-cols-2 gap-0 flex-1">
-                  <div className=" flex flex-col w-screen items-start mb-4 justify-evenly">
-                    <TotalComponent
-                      name={"Cash"}
-                      values={data.cash}
-                      toggleBreakdown={toggleBreakdown}
-                    />
-                    <div className="mb-2"></div>
-                    <TotalComponent
-                      name={"Acc. Receivable"}
-                      values={data.accountsReceivable}
-                      toggleBreakdown={toggleBreakdown}
-                    />
-                    <div className="mb-2"></div>
-                    <TotalComponent
-                      name={"Notes Receivable"}
-                      values={data.notesReceivable}
-                      toggleBreakdown={toggleBreakdown}
-                    />
-                    <div className="mb-2"></div>
-                    <TotalComponent
-                      name={"Acc. Payable"}
-                      values={data.accountsPayable}
-                      toggleBreakdown={toggleBreakdown}
-                    />
-                    <div className="mb-2"></div>
-                    <TotalComponent
-                      name={"Admin Expense"}
-                      values={data.adminExpense}
-                      toggleBreakdown={toggleBreakdown}
-                    />
-                  </div>
-                  <div className=" flex flex-col w-screen items-start mb-4 justify-evenly">
-                    <TotalComponent
-                      name={"Interest Expense"}
-                      values={dataLower.interest}
-                      toggleBreakdown={toggleBreakdown}
-                    />
-                    <div className="mb-2"></div>
-                    <TotalComponent
-                      name={"Inventory"}
-                      values={dataLower.inventory}
-                      toggleBreakdown={toggleBreakdown}
-                    />
-                    <div className="mb-2"></div>
-                    <TotalComponent
-                      name={"Salaries Expense"}
-                      values={dataLower.salaries}
-                      toggleBreakdown={toggleBreakdown}
-                    />
-                    <div className="mb-2"></div>
-                    <TotalComponent
-                      name={"Capital"}
-                      values={dataLower.capital}
-                      toggleBreakdown={toggleBreakdown}
-                    />
-                    <div className="mb-2"></div>
-                    <TotalComponent
-                      name={"Drawings"}
-                      values={dataLower.drawings}
-                      toggleBreakdown={toggleBreakdown}
-                    />
-                  </div>
-                </div>
-              </div> */}
-
               {navSelected === 1 ? (
                 <div className="w-full h-full flex justify-center items-center">
                   <CashComponent
@@ -213,8 +147,20 @@ function App() {
                 <></>
               )}
 
+              {navSelected === 3 ? (
+                <div className="w-full h-full flex justify-center items-center">
+                  <OwnerComponent
+                    data={allData}
+                    colors={colorsSelected}
+                    toggleBreakdown={toggleBreakdown}
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
+
               {toggleModule ? (
-                <div className="w-full h-full bg-gray-300/60 absolute top-0">
+                <div className="w-full h-full bg-gray-300/60 absolute top-0 z-20">
                   <BreakdownModule
                     toBreakDown={toBreakDown}
                     setToggleModule={setToggleModule}
