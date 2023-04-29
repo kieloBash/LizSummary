@@ -3,7 +3,22 @@ import * as XLSX from "xlsx";
 // const EXCEL_TYPE =
 //   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 
-export async function readDebitsCash(file) {
+function formatDate(date) {
+  var day = date.getDate();
+  var month = date.getMonth() + 1; // getMonth() returns a zero-based value
+  var year = date.getFullYear();
+
+  // add leading zeros to the day and month values if necessary
+  day = day.toString().padStart(2, "0");
+  month = month.toString().padStart(2, "0");
+
+  // format the date as dd/mm/yyyy
+  var formattedDate = day + "/" + month + "/" + year;
+
+  return formattedDate; // output: "24/10/2021"
+}
+
+export async function readCashModule(file) {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
@@ -11,22 +26,46 @@ export async function readDebitsCash(file) {
     fileReader.onload = (e) => {
       const bufferArray = e.target.result;
 
-      const wb = XLSX.read(bufferArray, { type: "buffer" });
+      const wb = XLSX.read(bufferArray, {
+        type: "buffer",
+        cellDates: true,
+        cellNF: false,
+        cellText: false,
+        dateFormat: "dd/mm/yyyy",
+      });
 
       const ws = wb.Sheets["LEDGER"];
 
-      const values = XLSX.utils.sheet_to_json(ws, {
-        range: "D5:D60",
+      // const NewWorkBook = XLSX.utils.book_new();
+      // XLSX.utils.book_append_sheet(NewWorkBook, ws, 'LEDGER_TEMP')
+      // XLSX.writeFile(NewWorkBook, 'new_workbook.xlsx');
+
+      const rowValues = XLSX.utils.sheet_to_json(ws, {
+        range: "C5:F60",
         header: 1,
       });
 
-      let data = [];
+      let debits = [];
+      let credits = [];
 
-      values.forEach((value) => {
-        if (value !== undefined && value !== "" && value > 0) {
-          data.push(value);
+      rowValues.forEach((row) => {
+        if (row[1] !== undefined && row[1] !== "" && row[1] > 0) {
+          let debitRow = {
+            date: formatDate(new Date(row[0])),
+            debit: row[1],
+          };
+          debits.push(debitRow);
+        }
+        if (row[3] !== undefined && row[3] !== "" && row[3] > 0) {
+          let creditRow = {
+            date: formatDate(new Date(row[2])),
+            credit: row[3],
+          };
+          credits.push(creditRow);
         }
       });
+
+      let data = {debits,credits};
       resolve(data);
     };
 
@@ -36,7 +75,7 @@ export async function readDebitsCash(file) {
   });
 }
 
-export async function readCreditsCash(file) {
+export async function readAccountsReceivableModule(file) {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
@@ -44,22 +83,46 @@ export async function readCreditsCash(file) {
     fileReader.onload = (e) => {
       const bufferArray = e.target.result;
 
-      const wb = XLSX.read(bufferArray, { type: "buffer" });
+      const wb = XLSX.read(bufferArray, {
+        type: "buffer",
+        cellDates: true,
+        cellNF: false,
+        cellText: false,
+        dateFormat: "dd/mm/yyyy",
+      });
 
       const ws = wb.Sheets["LEDGER"];
 
-      const values = XLSX.utils.sheet_to_json(ws, {
-        range: "F5:F60",
+      // const NewWorkBook = XLSX.utils.book_new();
+      // XLSX.utils.book_append_sheet(NewWorkBook, ws, 'LEDGER_TEMP')
+      // XLSX.writeFile(NewWorkBook, 'new_workbook.xlsx');
+
+      const rowValues = XLSX.utils.sheet_to_json(ws, {
+        range: "H5:K60",
         header: 1,
       });
 
-      let data = [];
+      let debits = [];
+      let credits = [];
 
-      values.forEach((value) => {
-        if (value !== undefined && value !== "" && value > 0) {
-          data.push(value);
+      rowValues.forEach((row) => {
+        if (row[1] !== undefined && row[1] !== "" && row[1] > 0) {
+          let debitRow = {
+            date: formatDate(new Date(row[0])),
+            debit: row[1],
+          };
+          debits.push(debitRow);
+        }
+        if (row[3] !== undefined && row[3] !== "" && row[3] > 0) {
+          let creditRow = {
+            date: formatDate(new Date(row[2])),
+            credit: row[3],
+          };
+          credits.push(creditRow);
         }
       });
+
+      let data = {debits,credits};
       resolve(data);
     };
 
@@ -69,7 +132,7 @@ export async function readCreditsCash(file) {
   });
 }
 
-export async function readCreditsAccountsReceivable(file) {
+export async function readNotesReceivableModule(file) {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
@@ -77,22 +140,46 @@ export async function readCreditsAccountsReceivable(file) {
     fileReader.onload = (e) => {
       const bufferArray = e.target.result;
 
-      const wb = XLSX.read(bufferArray, { type: "buffer" });
+      const wb = XLSX.read(bufferArray, {
+        type: "buffer",
+        cellDates: true,
+        cellNF: false,
+        cellText: false,
+        dateFormat: "dd/mm/yyyy",
+      });
 
       const ws = wb.Sheets["LEDGER"];
 
-      const values = XLSX.utils.sheet_to_json(ws, {
-        range: "K5:K60",
+      // const NewWorkBook = XLSX.utils.book_new();
+      // XLSX.utils.book_append_sheet(NewWorkBook, ws, 'LEDGER_TEMP')
+      // XLSX.writeFile(NewWorkBook, 'new_workbook.xlsx');
+
+      const rowValues = XLSX.utils.sheet_to_json(ws, {
+        range: "M5:P60",
         header: 1,
       });
 
-      let data = [];
+      let debits = [];
+      let credits = [];
 
-      values.forEach((value) => {
-        if (value !== undefined && value !== "" && value > 0) {
-          data.push(value);
+      rowValues.forEach((row) => {
+        if (row[1] !== undefined && row[1] !== "" && row[1] > 0) {
+          let debitRow = {
+            date: formatDate(new Date(row[0])),
+            debit: row[1],
+          };
+          debits.push(debitRow);
+        }
+        if (row[3] !== undefined && row[3] !== "" && row[3] > 0) {
+          let creditRow = {
+            date: formatDate(new Date(row[2])),
+            credit: row[3],
+          };
+          credits.push(creditRow);
         }
       });
+
+      let data = {debits,credits};
       resolve(data);
     };
 
@@ -102,7 +189,7 @@ export async function readCreditsAccountsReceivable(file) {
   });
 }
 
-export async function readDebitsAccountsReceivable(file) {
+export async function readAccountsPayableModule(file) {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
@@ -110,22 +197,46 @@ export async function readDebitsAccountsReceivable(file) {
     fileReader.onload = (e) => {
       const bufferArray = e.target.result;
 
-      const wb = XLSX.read(bufferArray, { type: "buffer" });
+      const wb = XLSX.read(bufferArray, {
+        type: "buffer",
+        cellDates: true,
+        cellNF: false,
+        cellText: false,
+        dateFormat: "dd/mm/yyyy",
+      });
 
       const ws = wb.Sheets["LEDGER"];
 
-      const values = XLSX.utils.sheet_to_json(ws, {
-        range: "I5:I60",
+      // const NewWorkBook = XLSX.utils.book_new();
+      // XLSX.utils.book_append_sheet(NewWorkBook, ws, 'LEDGER_TEMP')
+      // XLSX.writeFile(NewWorkBook, 'new_workbook.xlsx');
+
+      const rowValues = XLSX.utils.sheet_to_json(ws, {
+        range: "R5:U60",
         header: 1,
       });
 
-      let data = [];
+      let debits = [];
+      let credits = [];
 
-      values.forEach((value) => {
-        if (value !== undefined && value !== "" && value > 0) {
-          data.push(value);
+      rowValues.forEach((row) => {
+        if (row[1] !== undefined && row[1] !== "" && row[1] > 0) {
+          let debitRow = {
+            date: formatDate(new Date(row[0])),
+            debit: row[1],
+          };
+          debits.push(debitRow);
+        }
+        if (row[3] !== undefined && row[3] !== "" && row[3] > 0) {
+          let creditRow = {
+            date: formatDate(new Date(row[2])),
+            credit: row[3],
+          };
+          credits.push(creditRow);
         }
       });
+
+      let data = {debits,credits};
       resolve(data);
     };
 
@@ -135,7 +246,7 @@ export async function readDebitsAccountsReceivable(file) {
   });
 }
 
-export async function readCreditsNotesReceivable(file) {
+export async function readAdminExpenseModule(file) {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
@@ -143,22 +254,46 @@ export async function readCreditsNotesReceivable(file) {
     fileReader.onload = (e) => {
       const bufferArray = e.target.result;
 
-      const wb = XLSX.read(bufferArray, { type: "buffer" });
+      const wb = XLSX.read(bufferArray, {
+        type: "buffer",
+        cellDates: true,
+        cellNF: false,
+        cellText: false,
+        dateFormat: "dd/mm/yyyy",
+      });
 
       const ws = wb.Sheets["LEDGER"];
 
-      const values = XLSX.utils.sheet_to_json(ws, {
-        range: "P5:P60",
+      // const NewWorkBook = XLSX.utils.book_new();
+      // XLSX.utils.book_append_sheet(NewWorkBook, ws, 'LEDGER_TEMP')
+      // XLSX.writeFile(NewWorkBook, 'new_workbook.xlsx');
+
+      const rowValues = XLSX.utils.sheet_to_json(ws, {
+        range: "W5:Z60",
         header: 1,
       });
 
-      let data = [];
+      let debits = [];
+      let credits = [];
 
-      values.forEach((value) => {
-        if (value !== undefined && value !== "" && value > 0) {
-          data.push(value);
+      rowValues.forEach((row) => {
+        if (row[1] !== undefined && row[1] !== "" && row[1] > 0) {
+          let debitRow = {
+            date: formatDate(new Date(row[0])),
+            debit: row[1],
+          };
+          debits.push(debitRow);
+        }
+        if (row[3] !== undefined && row[3] !== "" && row[3] > 0) {
+          let creditRow = {
+            date: formatDate(new Date(row[2])),
+            credit: row[3],
+          };
+          credits.push(creditRow);
         }
       });
+
+      let data = {debits,credits};
       resolve(data);
     };
 
@@ -168,167 +303,3 @@ export async function readCreditsNotesReceivable(file) {
   });
 }
 
-export async function readDebitsNotesReceivable(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file);
-
-    fileReader.onload = (e) => {
-      const bufferArray = e.target.result;
-
-      const wb = XLSX.read(bufferArray, { type: "buffer" });
-
-      const ws = wb.Sheets["LEDGER"];
-
-      const values = XLSX.utils.sheet_to_json(ws, {
-        range: "N5:N60",
-        header: 1,
-      });
-
-      let data = [];
-
-      values.forEach((value) => {
-        if (value !== undefined && value !== "" && value > 0) {
-          data.push(value);
-        }
-      });
-      resolve(data);
-    };
-
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}
-
-export async function readCreditsAccountsPayable(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file);
-
-    fileReader.onload = (e) => {
-      const bufferArray = e.target.result;
-
-      const wb = XLSX.read(bufferArray, { type: "buffer" });
-
-      const ws = wb.Sheets["LEDGER"];
-
-      const values = XLSX.utils.sheet_to_json(ws, {
-        range: "U5:U60",
-        header: 1,
-      });
-
-      let data = [];
-
-      values.forEach((value) => {
-        if (value !== undefined && value !== "" && value > 0) {
-          data.push(value);
-        }
-      });
-      resolve(data);
-    };
-
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}
-
-export async function readDebitsAccountsPayable(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file);
-
-    fileReader.onload = (e) => {
-      const bufferArray = e.target.result;
-
-      const wb = XLSX.read(bufferArray, { type: "buffer" });
-
-      const ws = wb.Sheets["LEDGER"];
-
-      const values = XLSX.utils.sheet_to_json(ws, {
-        range: "S5:S60",
-        header: 1,
-      });
-
-      let data = [];
-
-      values.forEach((value) => {
-        if (value !== undefined && value !== "" && value > 0) {
-          data.push(value);
-        }
-      });
-      resolve(data);
-    };
-
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}
-
-export async function readCreditsAdminExpense(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file);
-
-    fileReader.onload = (e) => {
-      const bufferArray = e.target.result;
-
-      const wb = XLSX.read(bufferArray, { type: "buffer" });
-
-      const ws = wb.Sheets["LEDGER"];
-
-      const values = XLSX.utils.sheet_to_json(ws, {
-        range: "X5:X60",
-        header: 1,
-      });
-
-      let data = [];
-
-      values.forEach((value) => {
-        if (value !== undefined && value !== "" && value > 0) {
-          data.push(value);
-        }
-      });
-      resolve(data);
-    };
-
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}
-
-export async function readDebitsAdminExpense(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file);
-
-    fileReader.onload = (e) => {
-      const bufferArray = e.target.result;
-
-      const wb = XLSX.read(bufferArray, { type: "buffer" });
-
-      const ws = wb.Sheets["LEDGER"];
-
-      const values = XLSX.utils.sheet_to_json(ws, {
-        range: "Z5:Z60",
-        header: 1,
-      });
-
-      let data = [];
-
-      values.forEach((value) => {
-        if (value !== undefined && value !== "" && value > 0) {
-          data.push(value);
-        }
-      });
-      resolve(data);
-    };
-
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}

@@ -11,10 +11,10 @@ const TotalPrice = ({ name, values }) => {
     let totalCredit = 0;
     let totalDebit = 0;
     values.credits.forEach((value) => {
-      totalCredit += Number(value);
+      totalCredit += Number(value.credit);
     });
     values.debits.forEach((value) => {
-      totalDebit += Number(value);
+      totalDebit += Number(value.debit);
     });
     setTotalCredit(totalCredit.toFixed(2));
     setTotalDebit(totalDebit.toFixed(2));
