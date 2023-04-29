@@ -13,6 +13,7 @@ import {
 } from "./helper/ExcelFilesHandler";
 import BreakdownModule from "./components/Mobile/BreakdownModule";
 import Navbar from "./components/Mobile/Navbar";
+import CashComponent from "./components/Mobile/CashComponent";
 
 function App() {
   const [colorsSelected, setColorsSelected] = useState({
@@ -192,6 +193,18 @@ function App() {
                 </div>
               </div> */}
 
+              {navSelected === 1 ? (
+                <div className="w-full h-full flex justify-center items-center">
+                  <CashComponent
+                    data={allData}
+                    colors={colorsSelected}
+                    toggleBreakdown={toggleBreakdown}
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
+
               {navSelected === 2 ? (
                 <div className="w-full h-full flex justify-center items-center">
                   <SummaryComponent data={allData} colors={colorsSelected} />
@@ -201,13 +214,15 @@ function App() {
               )}
 
               {toggleModule ? (
-                <BreakdownModule
-                  toBreakDown={toBreakDown}
-                  setToggleModule={setToggleModule}
-                  colors={colorsSelected}
-                />
+                <div className="w-full h-full bg-gray-300/60 absolute top-0">
+                  <BreakdownModule
+                    toBreakDown={toBreakDown}
+                    setToggleModule={setToggleModule}
+                    colors={colorsSelected}
+                  />
+                </div>
               ) : (
-                <></>
+                <div className=""></div>
               )}
 
               <Navbar
@@ -217,7 +232,7 @@ function App() {
               />
             </div>
           ) : (
-            <>Hello</>
+            <></>
           )}
         </div>
       )}

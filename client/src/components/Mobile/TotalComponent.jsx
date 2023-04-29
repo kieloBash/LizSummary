@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const TotalPrice = ({ name, values, toggleBreakdown }) => {
+const TotalPrice = ({ name, values, toggleBreakdown, colors }) => {
   const [total, setTotal] = useState(0);
   const [totalCredit, setTotalCredit] = useState(0);
   const [totalDebit, setTotalDebit] = useState(0);
@@ -26,10 +26,10 @@ const TotalPrice = ({ name, values, toggleBreakdown }) => {
 
   return (
     <div
-      className="p-2 px-4 bg-white shadow-lg rounded-2xl dark:bg-gray-800"
+      className="p-2 px-4 w-full h-full"
       onClick={() => toggleBreakdown(name)}
     >
-      <div className="flex h-full">
+      <div className="flex h-full w-full">
         <div className="flex justify-center items-center mr-3">
           {total > 0 ? (
             <svg
@@ -38,7 +38,7 @@ const TotalPrice = ({ name, values, toggleBreakdown }) => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-8 h-8 stroke-green-400"
+              className={`w-14 h-14 mr-1`}
             >
               <path
                 strokeLinecap="round"
@@ -53,7 +53,7 @@ const TotalPrice = ({ name, values, toggleBreakdown }) => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-8 h-8 stroke-red-400"
+              className={`w-14 h-14 mr-1 stroke-red-400`}
             >
               <path
                 strokeLinecap="round"
@@ -64,16 +64,16 @@ const TotalPrice = ({ name, values, toggleBreakdown }) => {
           )}
         </div>
 
-        <div className="flex flex-col">
-          <div className="flex items-center">
-            <p className="text-sm font-bold text-black text-md dark:text-white min-w-[7rem] text-center">
+        <div className="flex flex-col w-full">
+          <div className="flex items-center w-full">
+            <p className="text-lg font-normal text-black text-md min-w-[7rem] text-center w-full">
               {name}
             </p>
           </div>
           <div className="flex justify-evenly items-center">
             <p
-              className={`text-2xl font-bold text-center ${
-                total > 0 ? "text-green-400" : "text-red-400"
+              className={`text-4xl font-bold text-center ${
+                total > 0 ? `${colors.text}` : "text-red-400"
               } flex items-center`}
             >
               {total}
