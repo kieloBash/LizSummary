@@ -10,6 +10,7 @@ import {
   readAccountsPayableModule,
   readAdminExpenseModule,
 } from "./helper/ExcelFilesHandler";
+import BreakdownModule from "./components/Mobile/BreakdownModule";
 
 function App() {
   const [colorsSelected, setColorsSelected] = useState({
@@ -20,8 +21,9 @@ function App() {
     bgDark: bgColors.purpleBgDark,
   });
   const [data, setData] = useState();
-
   const [loading, setLoading] = useState(true);
+  const [toggleModule, setToggleModule] = useState(false);
+  const [toBreakDown, setToBreakDown] = useState();
 
   const handleUploadedFile = async (file) => {
     setData({
@@ -34,11 +36,35 @@ function App() {
   };
 
   useEffect(() => {
-    if (data) {
-      setLoading(false);
-      console.log(data);
-    }
+    if (data) setLoading(false);
   }, [data]);
+
+  const toggleBreakdown = (name) => {
+    switch (name) {
+      case "Cash":
+        setToBreakDown({ name: name, data: data.cash });
+        setToggleModule(true);
+        break;
+      case "Acc. Receivable":
+        setToBreakDown({ name: name, data: data.accountsReceivable });
+        setToggleModule(true);
+        break;
+      case "Notes Receivable":
+        setToBreakDown({ name: name, data: data.notesReceivable });
+        setToggleModule(true);
+        break;
+      case "Acc. Payable":
+        setToBreakDown({ name: name, data: data.accountsPayable });
+        setToggleModule(true);
+        break;
+      case "Admin Expense":
+        setToBreakDown({ name: name, data: data.adminExpense });
+        setToggleModule(true);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className={`App ${colorsSelected.gradient} w-screen h-screen`}>
@@ -47,24 +73,46 @@ function App() {
       ) : (
         <div className="flex w-screen h-screen justify-center items-center">
           {data ? (
-            <div className="flex flex-col h-screen w-screen justify-evenly items-center">
-              <TotalComponent name={"Cash"} values={data.cash} />
-              <TotalComponent
-                name={"Accounts Receivable"}
-                values={data.accountsReceivable}
-              />
-              <TotalComponent
-                name={"Notes Receivable"}
-                values={data.notesReceivable}
-              />
-              <TotalComponent
-                name={"Accounts Payable"}
-                values={data.accountsPayable}
-              />
-              <TotalComponent
-                name={"Admin Expense"}
-                values={data.adminExpense}
-              />
+            <div className="flex flex-col h-screen w-screen justify-center items-center">
+              <div className="flex-1"></div>
+              <div className="flex-1 flex flex-col w-screen items-start ml-10 mb-4 justify-evenly">
+                <TotalComponent
+                  name={"Cash"}
+                  values={data.cash}
+                  toggleBreakdown={toggleBreakdown}
+                />
+                <div className="mb-2"></div>
+                <TotalComponent
+                  name={"Acc. Receivable"}
+                  values={data.accountsReceivable}
+                  toggleBreakdown={toggleBreakdown}
+                />
+                <TotalComponent
+                  name={"Notes Receivable"}
+                  values={data.notesReceivable}
+                  toggleBreakdown={toggleBreakdown}
+                />
+                <div className="mb-2"></div>
+                <TotalComponent
+                  name={"Acc. Payable"}
+                  values={data.accountsPayable}
+                  toggleBreakdown={toggleBreakdown}
+                />
+                <TotalComponent
+                  name={"Admin Expense"}
+                  values={data.adminExpense}
+                  toggleBreakdown={toggleBreakdown}
+                />
+              </div>
+              {toggleModule ? (
+                <BreakdownModule
+                  toBreakDown={toBreakDown}
+                  setToggleModule={setToggleModule}
+                  colors={colorsSelected}
+                />
+              ) : (
+                <></>
+              )}
             </div>
           ) : (
             <>Hello</>
