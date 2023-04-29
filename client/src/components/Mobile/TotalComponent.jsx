@@ -18,7 +18,7 @@ const TotalPrice = ({ name, values }) => {
     });
     setTotalCredit(totalCredit.toFixed(2));
     setTotalDebit(totalDebit.toFixed(2));
-    setTotal((totalDebit - totalCredit).toFixed(2));
+    setTotal((totalCredit - totalDebit).toFixed(2));
   }, [values]);
 
   return (
