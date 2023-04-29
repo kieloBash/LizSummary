@@ -81,7 +81,7 @@ const SummaryComponent = ({ data, colors }) => {
     <>
       {assetValues && liabilitiesValues && equityValues ? (
         <div
-          className={`w-5/6 h-4/5 flex justify-center items-center font-main ${colors.text} font-normal mb-24`}
+          className={`w-5/6 h-4/5 flex justify-center items-center font-main ${colors.text} font-normal mb-32`}
         >
           <div className="grid grid-cols-1 grid-rows-3 gap-5">
             <div className="bg-white/80 w-[18rem] h-[14rem] rounded-2xl shadow-xl p-4 flex flex-col">

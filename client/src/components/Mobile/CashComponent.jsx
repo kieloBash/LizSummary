@@ -11,7 +11,7 @@ const CashComponent = ({ data, colors, toggleBreakdown }) => {
   ];
   return (
     <div
-      className={`w-5/6 h-4/5 flex justify-start items-center font-main ${colors.text} font-normal mb-24`}
+      className={`w-5/6 h-4/5 flex justify-start items-center font-main ${colors.text} font-normal mb-32`}
     >
       <div className="grid grid-cols-1 grid-rows-5 gap-8 w-5/6 h-full">
         {val.map((element, index) => {
