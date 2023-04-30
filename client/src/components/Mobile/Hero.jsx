@@ -3,12 +3,12 @@ import FileUploadModal from './FileUploadModal'
 function Hero({ colors, handleUploadedFile }) {
   return (
     <div
-      className={`bg-transparent pb-12 overflow-y-hidden`}
-      style={{ minHeight: 700 }}
+      className={`bg-transparent overflow-hidden h-full w-full flex justify-center items-center`}
+      // style={{ minHeight: 700 }}
     >
       <dh-component>
         <div
-          className={`h-screen flex justify-center items-center font-main`}
+          className={`w-screen h-screen flex justify-center items-center font-main`}
         >
           <div className="container mx-auto flex flex-col items-center py-12 sm:py-24">
             <div className="w-11/12 sm:w-2/3 lg:flex justify-center items-center flex-col  mb-5 sm:mb-10">

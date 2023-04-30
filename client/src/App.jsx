@@ -300,7 +300,7 @@ function App() {
   }
 
   return (
-    <div className={`App ${colorsSelected.gradient} w-screen h-screen`}>
+    <div className={`App ${colorsSelected.gradient} w-screen h-screen overflow-hidden`}>
       <div className="absolute rounded-full bg-white/40 h-[280px] w-[280px] top-[20px] left-[47px] z-0"></div>
       <div className="absolute rounded-full bg-white/30 h-[140px] w-[140px] top-[120px] left-[227px]  z-0"></div>
       <div className="absolute w-full h-full backdrop-blur-md bg-white/30 z-0"></div>
