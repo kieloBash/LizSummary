@@ -9,6 +9,7 @@ import {
   readAccountsPayableModule,
   readAdminExpenseModule,
   readLowerModule,
+  save,
 } from "./helper/ExcelFilesHandler";
 import BreakdownModule from "./components/Mobile/BreakdownModule";
 import Navbar from "./components/Mobile/Navbar";
@@ -16,6 +17,19 @@ import CashComponent from "./components/Mobile/CashComponent";
 import OwnerComponent from "./components/Mobile/OwnerComponent";
 
 function App() {
+  const categories = [
+    "Cash",
+    "Acc. Receivable",
+    "Notes Receivable",
+    "Acc. Payable",
+    "Admin Expense",
+    "Interest Expense",
+    "Inventory",
+    "Salaries Expense",
+    "Capital",
+    "Drawings",
+  ];
+  const [file, setFile] = useState();
   const [toggleColorChange, setColorChange] = useState(false);
   const [colorsSelected, setColorsSelected] = useState({
     gradient: bgColors.pinkGradient,
@@ -44,6 +58,8 @@ function App() {
     });
 
     setDataLower(await readLowerModule(file));
+
+    setFile(file);
   };
 
   useEffect(() => {
@@ -62,7 +78,7 @@ function App() {
         drawings: dataLower.drawings,
       });
     }
-  }, [data, dataLower]);
+  }, [data, dataLower, file]);
 
   const toggleBreakdown = (name) => {
     switch (name) {
@@ -154,11 +170,134 @@ function App() {
       default:
         break;
     }
+    setColorChange(!toggleColorChange);
   };
 
   const handleAdd = (input) => {
-    console.log(input)
+    let prev;
+    switch (input.category) {
+      case categories[0]:
+        prev = allData.cash;
+        break;
+      case categories[1]:
+        prev = allData.accountsReceivable;
+        break;
+      case categories[2]:
+        prev = allData.notesReceivable;
+        break;
+      case categories[3]:
+        prev = allData.accountsPayable;
+        break;
+      case categories[4]:
+        prev = allData.adminExpense;
+        break;
+      case categories[5]:
+        prev = allData.interest;
+        break;
+      case categories[6]:
+        prev = allData.inventory;
+        break;
+      case categories[7]:
+        prev = allData.salaries;
+        break;
+      case categories[8]:
+        prev = allData.capital;
+        break;
+      case categories[9]:
+        prev = allData.drawings;
+        break;
+      default:
+        break;
+    }
+
+    let debits = prev.debits;
+    let credits = prev.credits;
+
+    switch (input.type) {
+      case "debit credit":
+        debits.push({ date: input.dateDebit, debit: Number(input.debit) });
+        credits.push({ date: input.dateCredit, credit: Number(input.credit) });
+        break;
+      case "debit":
+        debits.push({ date: input.dateDebit, debit: Number(input.debit) });
+        break;
+      case "credit":
+        credits.push({ date: input.dateCredit, credit: Number(input.credit) });
+        break;
+      default:
+        break;
+    }
+
+    switch (input.category) {
+      case categories[0]:
+        setAllData((prevAllData) => ({
+          ...prevAllData,
+          cash: prev,
+        }));
+        break;
+      case categories[1]:
+        setAllData((prevAllData) => ({
+          ...prevAllData,
+          accountsReceivable: prev,
+        }));
+        break;
+      case categories[2]:
+        setAllData((prevAllData) => ({
+          ...prevAllData,
+          notesReceivable: prev,
+        }));
+        break;
+      case categories[3]:
+        setAllData((prevAllData) => ({
+          ...prevAllData,
+          accountsPayable: prev,
+        }));
+        break;
+      case categories[4]:
+        setAllData((prevAllData) => ({
+          ...prevAllData,
+          adminExpense: prev,
+        }));
+        break;
+      case categories[5]:
+        setAllData((prevAllData) => ({
+          ...prevAllData,
+          interest: prev,
+        }));
+        break;
+      case categories[6]:
+        setAllData((prevAllData) => ({
+          ...prevAllData,
+          inventory: prev,
+        }));
+        break;
+      case categories[7]:
+        setAllData((prevAllData) => ({
+          ...prevAllData,
+          salaries: prev,
+        }));
+        break;
+      case categories[8]:
+        setAllData((prevAllData) => ({
+          ...prevAllData,
+          capital: prev,
+        }));
+        break;
+      case categories[9]:
+        setAllData((prevAllData) => ({
+          ...prevAllData,
+          drawings: prev,
+        }));
+        break;
+      default:
+        break;
+    }
+    
   };
+
+  const handleSave = () =>{
+    save(file, allData);
+  }
 
   return (
     <div className={`App ${colorsSelected.gradient} w-screen h-screen`}>
@@ -174,12 +313,9 @@ function App() {
         </div>
       ) : (
         <div className="flex w-screen h-screen justify-center items-center overflow-hidden relative">
-          <div
-            className="absolute bottom-[6.0rem]"
-            onClick={() => setColorChange(!toggleColorChange)}
-          >
+          <div className="absolute bottom-[6.5rem] flex w-28 justify-evenly items-center">
             {toggleColorChange ? (
-              <div className="absolute -top-[2.4rem] -left-[4rem] w-40 h-10 bg-white/60 backdrop-blur-md rounded-full shadow-lg flex justify-evenly items-center">
+              <div className="absolute -top-[2.4rem] -left-[3rem] w-40 h-10 bg-white/60 backdrop-blur-md rounded-full shadow-lg flex justify-evenly items-center">
                 <div
                   className="h-[2rem] w-[2rem] bg-purple-400 rounded-full"
                   onClick={() => handleColorChange(1)}
@@ -200,8 +336,17 @@ function App() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               className={`w-8 h-8 ${colorsSelected.fill}`}
+              onClick={() => setColorChange(!toggleColorChange)}
             >
               <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className={`w-8 h-8 ${colorsSelected.fill}`}
+              onClick={handleSave}
+            >
+              <path d="M12 1.5a.75.75 0 01.75.75V7.5h-1.5V2.25A.75.75 0 0112 1.5zM11.25 7.5v5.69l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V7.5h3.75a3 3 0 013 3v9a3 3 0 01-3 3h-9a3 3 0 01-3-3v-9a3 3 0 013-3h3.75z" />
             </svg>
           </div>
 

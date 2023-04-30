@@ -13,18 +13,18 @@ const AddTransaction = ({ colors, handleClose, handleAdd }) => {
     "Capital",
     "Drawings",
   ];
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Cash");
 
   const [dateDebit, setdateDebit] = useState("yyyy-MM-dd");
-  const [dateDebitConsole, setdateDebitConsole] = useState("yyyy-MM-dd");
+  const [dateDebitConsole, setdateDebitConsole] = useState(undefined);
   const [dateCredit, setdateCredit] = useState("yyyy-MM-dd");
-  const [dateCreditConsole, setdateCreditConsole] = useState("yyyy-MM-dd");
+  const [dateCreditConsole, setdateCreditConsole] = useState(undefined);
 
   const [credit, setcredit] = useState(0);
   const [debit, setdebit] = useState(0);
 
   const handleSubmit = () => {
-    console.log(selectedCategory, dateDebit, dateCredit, debit, credit);
+    // console.log(selectedCategory, dateDebit, dateCredit, debit, credit);
 
     if (
       debit > 0 &&
@@ -32,14 +32,34 @@ const AddTransaction = ({ colors, handleClose, handleAdd }) => {
       credit > 0 &&
       dateCredit !== "yyyy-MM-dd"
     ) {
-      handleAdd({ type: "debit credit", credit, dateCredit, debit, dateDebit });
+      handleAdd({
+        type: "debit credit",
+        credit,
+        dateCredit,
+        debit,
+        dateDebit,
+        category: selectedCategory,
+      });
       handleClear();
+      handleClose();
     } else if (debit > 0 && dateDebit !== "yyyy-MM-dd") {
-      handleAdd({ type: "debit", debit, dateDebit });
+      handleAdd({
+        type: "debit",
+        debit,
+        dateDebit,
+        category: selectedCategory,
+      });
       handleClear();
+      handleClose();
     } else if (credit > 0 && dateCredit !== "yyyy-MM-dd") {
-      handleAdd({ type: "credit", credit, dateCredit });
+      handleAdd({
+        type: "credit",
+        credit,
+        dateCredit,
+        category: selectedCategory,
+      });
       handleClear();
+      handleClose();
     } else {
       console.log("error");
     }
@@ -47,17 +67,17 @@ const AddTransaction = ({ colors, handleClose, handleAdd }) => {
 
   const handleClear = () => {
     setdateDebit("yyyy-MM-dd");
-    setdateDebitConsole("yyyy-MM-dd");
+    setdateDebitConsole(undefined);
     setdateCredit("yyyy-MM-dd");
-    setdateCreditConsole("yyyy-MM-dd");
+    setdateCreditConsole(undefined);
     setcredit(0);
     setdebit(0);
   };
 
-  const handleToggleClose = () =>{
+  const handleToggleClose = () => {
     handleClear();
     handleClose();
-  }
+  };
 
   function formatDate(date) {
     var day = date.getDate();

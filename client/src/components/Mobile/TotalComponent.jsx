@@ -13,11 +13,7 @@ const TotalPrice = ({ name, values, toggleBreakdown, colors }) => {
       totalDebit += Number(value.debit);
     });
 
-    if (name === "Acc. Payable" || name === "Capital") {
-      setTotal((totalCredit - totalDebit).toFixed(2));
-    } else {
-      setTotal((totalDebit - totalCredit).toFixed(2));
-    }
+    setTotal(Math.abs((totalCredit - totalDebit).toFixed(2)))
 
     
   }, [values,name]);

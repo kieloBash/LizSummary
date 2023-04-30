@@ -16,12 +16,8 @@ const BreakdownModule = ({ toBreakDown, setToggleModule, colors }) => {
       credit += Number(val.credit);
     });
     setCredit(credit.toFixed(2));
+    setTotal(Math.abs((credit - debit).toFixed(2)))
 
-    if (toBreakDown.name === "Acc. Payable" || toBreakDown.name === "Capital") {
-      setTotal((credit - debit).toFixed(2));
-    } else {
-      setTotal((debit - credit).toFixed(2));
-    }
   }, [toBreakDown]);
 
   return (

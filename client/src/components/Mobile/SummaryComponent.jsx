@@ -19,9 +19,9 @@ const SummaryComponent = ({ data, colors, handleAdd }) => {
       debits += val.debit;
     });
 
-    total = (credits - debits).toFixed(2);
+    total = Math.abs((credits - debits).toFixed(2));
 
-    return Math.abs(total);
+    return total;
   }
   useEffect(() => {
     let cashTotal = getTotal(data.cash);
