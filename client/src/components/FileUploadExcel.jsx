@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
+import React from "react";
+// import * as XLSX from "xlsx";
+// import { saveAs } from "file-saver";
 
 export default function FileUpload({
-  toggleMobileData,
+  // toggleMobileData,
   setSelectedFile,
-  colors,
+  // colors,
 }) {
-  const [credits, setCredits] = useState([]);
+  // const [credits, setCredits] = useState([]);
 
-  const EXCEL_TYPE =
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  // const EXCEL_TYPE =
+  //   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 
   const handleFileSelect = (event) => {
     let file = event.target.files[0];
     setSelectedFile(file);
   };
 
-  const saveAsExcel = (buffer, filename) => {
-    const datas = new Blob([buffer], { type: EXCEL_TYPE });
-    saveAs(datas, filename + "_export_" + new Date().getTime() + ".xlsx");
-  };
+  // const saveAsExcel = (buffer, filename) => {
+  //   const datas = new Blob([buffer], { type: EXCEL_TYPE });
+  //   saveAs(datas, filename + "_export_" + new Date().getTime() + ".xlsx");
+  // };
 
-  function toggleMobile() {}
+  // function toggleMobile() {}
 
   return (
     <div>

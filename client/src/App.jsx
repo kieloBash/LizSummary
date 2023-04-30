@@ -18,11 +18,12 @@ import OwnerComponent from "./components/Mobile/OwnerComponent";
 function App() {
   const [toggleColorChange, setColorChange] = useState(false);
   const [colorsSelected, setColorsSelected] = useState({
-    gradient: bgColors.purpleGradient,
-    text: bgColors.purpleText,
-    bg: bgColors.purpleBgLight,
-    stroke: bgColors.purpleStroke,
-    fill: bgColors.purpleFill,
+    gradient: bgColors.pinkGradient,
+    text: bgColors.pinkText,
+    bg: bgColors.pinkBgLight,
+    stroke: bgColors.pinkStroke,
+    fill: bgColors.pinkFill,
+    bgOp: bgColors.pinkBgOp,
   });
   const [data, setData] = useState();
   const [dataLower, setDataLower] = useState();
@@ -120,6 +121,7 @@ function App() {
             bg: bgColors.purpleBgLight,
             stroke: bgColors.purpleStroke,
             fill: bgColors.purpleFill,
+            bgOp: bgColors.purpleBgOp,
           };
         });
         break;
@@ -132,6 +134,7 @@ function App() {
             bg: bgColors.pinkBgLight,
             stroke: bgColors.pinkStroke,
             fill: bgColors.pinkFill,
+            bgOp: bgColors.pinkBgOp,
           };
         });
         break;
@@ -144,6 +147,7 @@ function App() {
             bg: bgColors.blueBgLight,
             stroke: bgColors.blueStroke,
             fill: bgColors.blueFill,
+            bgOp: bgColors.blueBgOp,
           };
         });
         break;
@@ -151,6 +155,11 @@ function App() {
         break;
     }
   };
+
+  const handleAdd = (input) => {
+    console.log(input)
+  };
+
   return (
     <div className={`App ${colorsSelected.gradient} w-screen h-screen`}>
       <div className="absolute rounded-full bg-white/40 h-[280px] w-[280px] top-[20px] left-[47px] z-0"></div>
@@ -173,15 +182,15 @@ function App() {
               <div className="absolute -top-[2.4rem] -left-[4rem] w-40 h-10 bg-white/60 backdrop-blur-md rounded-full shadow-lg flex justify-evenly items-center">
                 <div
                   className="h-[2rem] w-[2rem] bg-purple-400 rounded-full"
-                  onClick={()=>handleColorChange(1)}
+                  onClick={() => handleColorChange(1)}
                 ></div>
                 <div
                   className="h-[2rem] w-[2rem] bg-pink-400 rounded-full"
-                  onClick={()=>handleColorChange(2)}
+                  onClick={() => handleColorChange(2)}
                 ></div>
                 <div
                   className="h-[2rem] w-[2rem] bg-blue-400 rounded-full"
-                  onClick={()=>handleColorChange(3)}
+                  onClick={() => handleColorChange(3)}
                 ></div>
               </div>
             ) : (
@@ -212,7 +221,11 @@ function App() {
 
               {navSelected === 2 ? (
                 <div className="w-full h-full flex justify-center items-center">
-                  <SummaryComponent data={allData} colors={colorsSelected} />
+                  <SummaryComponent
+                    data={allData}
+                    colors={colorsSelected}
+                    handleAdd={handleAdd}
+                  />
                 </div>
               ) : (
                 <></>
